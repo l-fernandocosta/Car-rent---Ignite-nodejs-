@@ -1,11 +1,21 @@
-import { Specification } from "../model/Specification";
-import { ISpecificationDTO } from "./ISpecificationRepository";
+import { Specification } from "../../model/Specification";
+import { ISpecificationDTO } from "../ISpecificationRepository";
 
 class SpecificationRepository {
   private specifications: Specification[];
 
-  constructor() {
+  private static INSTANCE: SpecificationRepository;
+
+  private constructor() {
     this.specifications = [];
+  }
+
+  public static getInstance(): SpecificationRepository {
+    if (!SpecificationRepository.INSTANCE) {
+      SpecificationRepository.INSTANCE = new SpecificationRepository();
+    }
+
+    return SpecificationRepository.INSTANCE;
   }
   create({ name, description }: ISpecificationDTO) {
     const specification = new Specification();
